@@ -18,6 +18,8 @@ int main()
         cerr << "Error Occured ---- " << ex.what() << endl;
     }
 
+    cout << "\nProgram will exit in 5 seconds..." << endl;
+    std::this_thread::sleep_for(std::chrono::seconds(5)); 
 
     return 0;
 }

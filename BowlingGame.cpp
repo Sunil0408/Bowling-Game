@@ -11,49 +11,24 @@ void BowlingGame::run()
         Frame current;
         int first = 0, second = 0, bonus = 0;
         cout << "Frame " << frame << ":\n";
+        cout << "  First throw: ";
+        cin >> first;
 
-        do {
-            cout << "  First throw: ";
-            cin >> first;
-
-            if (cin.fail() || first < 0 || first > 10) 
-            {
-                cout << "  Invalid input. Enter a number between 0 and 10.\n";
-                cin.clear(); //reset error flag e.g failbit
-                cin.ignore(numeric_limits<streamsize>::max(), '\n'); //empty buffer to read new input
-            }
-            else 
-            {
-                break; // break the loop in case of valid input
-            }
-        } while (true); //break is there in loop 
-
-
+        if (first < 0 || first > 10) 
+        {
+            throw invalid_argument("Invalid pins for first throw. Pins must be between 0 and 10."); //error can also be replaced with allowing user to correct input
+        }
 
         //Second throw - eligible only if not strike or last frame
         if (first != 10 || frame == 10) 
         {
-            do {
-                cout << "  Second throw: ";
-                cin >> second;
+            cout << "  Second throw: ";
+            cin >> second;
 
-                if (cin.fail() || second < 0 || second > 10) 
-                {
-                    cout << "  Invalid input. Pins must be between 0 and 10. Please try again.\n";
-                    cin.clear();
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n'); //empty buffer to read new input
-                }
-                else if (frame != 10 && (first + second) > 10) 
-                {
-                    cout << "  Invalid input. Total pins in a frame must not exceed 10. Please try again.\n";
-                }
-                else 
-                {
-                    break;  // break the loop in case of valid input
-                }
-            } while (true);//break is there in loop 
-
-
+            if (second < 0 || second > 10) 
+            {
+                throw invalid_argument("Invalid pins for second throw. Pins must be between 0 and 10.");
+            }
         }
 
         //set first and second throw score
@@ -62,22 +37,12 @@ void BowlingGame::run()
         //bonus throw - eligible only for 10th frame and if Strike or Spare in first two throws
         if (frame == 10 && (current.isStrike() || current.isSpare())) 
         {
-            do {
-                cout << "  Bonus throw: ";
-                cin >> bonus;
-
-                if (cin.fail() || bonus < 0 || bonus > 10) 
-                {
-                    cout << "  Invalid input. Pins must be between 0 and 10. Please try again.\n";
-                    cin.clear();
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n'); //empty buffer to read new input
-                }
-                else 
-                {
-                    break;  // break the loop in case of valid input
-                }
-            } while (true);//break is there in loop 
-
+            cout << "  Bonus throw: ";
+            cin >> bonus;
+            if (bonus < 0 || bonus > 10)
+            {
+                throw invalid_argument("Invalid pins for bonus throw. Pins must be between 0 and 10.");
+            }
             //set bonus
             current.setBonus(bonus);
         }
