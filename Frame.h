@@ -9,12 +9,14 @@ private:
     int second;
     int bonus;
     bool hasBonus;
+    int maxPins;
 
 public:
     Frame();
 
     void setThrows(int f, int s);
     void setBonus(int b);
+    void setMaxPins(int m);
 
     int getFirst() const;
     int getSecond() const;

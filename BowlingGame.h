@@ -5,9 +5,14 @@
 #include "Player.h"
 #include "Frame.h"
 
+struct PlayerInfo {
+    std::string name;
+    Player player;
+};
+
 class BowlingGame {
 private:
-    Player player;
+    std::vector<PlayerInfo> m_BowlingPlayers;
 
 public:
     void run();

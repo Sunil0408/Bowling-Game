@@ -1,5 +1,6 @@
 // Frame.cpp
 #include "Frame.h"
+#include <string>
 using namespace std;
 
 Frame::Frame()
@@ -8,28 +9,32 @@ Frame::Frame()
     second = 0;
     bonus = 0;
     hasBonus = false;
+    maxPins = 0;
 }
 
 void Frame::setThrows(int f, int s) 
 {
-    if (f < 0 || f > 10 || s < 0 || s > 10) 
+    if (f < 0 || f > maxPins || s < 0 || s > maxPins)
     {
-        throw invalid_argument("Pins must be between 0 and 10.");
+        throw std::invalid_argument("Pins must be between 0 and " + std::to_string(maxPins));
     }
-    if (f != 10 && (f + s > 10)) 
+    if (f != maxPins && (f + s > maxPins))
     {
-        throw invalid_argument("Total pins can't be more than 10 unless first is strike.");
+        throw invalid_argument("Total pins can't be more than "+ std::to_string(maxPins) + " unless first is strike.");
     }
     //set first and second throw value 
     first = f;
     second = s;
 }
-
+void Frame::setMaxPins(int m)
+{
+    maxPins = m;
+}
 void Frame::setBonus(int b) 
 {
-    if (b < 0 || b > 10) 
+    if (b < 0 || b > maxPins)
     {
-        throw invalid_argument("Bonus pins must be between 0 and 10.");
+        throw invalid_argument("Bonus pins must be between 0 and " + std::to_string(maxPins));
     }
     //set bonus value and make flag as true
     bonus = b;
@@ -58,12 +63,13 @@ bool Frame::bonusAvailable() const
 
 bool Frame::isStrike() const 
 {
-    //strike is when first throw itself is 10
-    return first == 10;
+    //strike is when first throw itself is euqal to maxPins
+    return first == maxPins;
 }
 
 bool Frame::isSpare() const 
 {
-    //Spare is when first throw is not 10 and sum is equal to 10
-    return (first + second == 10) && first != 10;
+    //Spare is when first throw is not equal to maxPins and sum is equal to maxPins
+    return (first + second == maxPins) && first != maxPins;
 }
+

@@ -37,8 +37,8 @@ int Player::totalScore() const
             totalScore += gameFrames[i + 1].getFirst(); //add Spare bonus if applicable
         }
 
-        // Frame 10 Handling
-        if (i == 9 && gameFrames[i].bonusAvailable()) 
+        // Last Frame Handling
+        if (i == gameFrames.size()-1 && gameFrames[i].bonusAvailable())
         {
             totalScore += gameFrames[i].getBonus(); //add bonus throw score 
         }
